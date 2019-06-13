@@ -127,9 +127,9 @@ STATIC_URL = '/static/'
 # Mail
 EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.mailtrap.io'
-EMAIL_PORT = 2525
-EMAIL_HOST_USER = 'c40cf9a81646c0'
-EMAIL_HOST_PASSWORD = 'e8b701901a8462'
+EMAIL_HOST_USER = '6a93c05454794b'
+EMAIL_HOST_PASSWORD = 'be3450d4cdd9cb'
+EMAIL_PORT = '2525'
 
 # System Variables
 SUPPORT_EMAIL = 'support@developer.com'

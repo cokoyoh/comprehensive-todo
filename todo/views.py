@@ -1,28 +1,41 @@
 from django.db import transaction
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, reverse
 from django.utils import timezone
 from .mails import Mailer
+from django.views import generic
 
 from .models import Todo
 
 
-def index(request):
-    if request.method == 'POST':
-        task = request.POST['task']
-        date = request.POST['date']
-        created_at = timezone.now().strftime("%Y-%m-%d %H:%M:%S")
+# def index(request):
+#     if request.method == 'POST':
+#         task = request.POST['task']
+#         date = request.POST['date']
+#         created_at = timezone.now().strftime("%Y-%m-%d %H:%M:%S")
+#
+#         todo = Todo(task=task, date=date, created_at=created_at, updated_at=created_at)
+#         todo.save()
+#
+#         return redirect('/show')
+#
+#     return render(request, 'index.html')
+#
+#
+# def show(request):
+#     todos = Todo.objects.all()
+#     return render(request, 'show.html', {'todos': todos})
 
-        todo = Todo(task=task, date=date, created_at=created_at, updated_at=created_at)
-        todo.save()
+class IndexView(generic.ListView):
+    template_name = 'show.html'
+    context_object_name = 'todos'
 
-        return redirect('/show')
+    def get_queryset(self):
+        return Todo.objects.all()
 
-    return render(request, 'index.html')
 
-
-def show(request):
-    todos = Todo.objects.all()
-    return render(request, 'show.html', {'todos': todos})
+class DetailView(generic.DetailView):
+    model = Todo
+    template_name = 'details.html'
 
 
 @transaction.atomic
@@ -37,4 +50,4 @@ def mark_as_completed(request, id):
     }
     Mailer('Task Completed', ['john@example.com'], data).send()
 
-    return redirect('/show')
+    return redirect(reverse('todo:index'))
