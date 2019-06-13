@@ -21,5 +21,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('todos', views.index),
     path('show', views.show),
-    path('mark-completed/<id>', views.mark_as_completed),
+    path('mark-completed/<int:id>', views.mark_as_completed),
 ]
